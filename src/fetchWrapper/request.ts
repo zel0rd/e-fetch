@@ -1,7 +1,21 @@
 import { parseResponse } from './responseParser';
+import { RequestOptions } from './requestOptions';
 
 export class FetchWrapper {
-  async get<T>(url: string): Promise<T> {
+  private defaultHeaders: HeadersInit = {};
+
+  setDefaultHeaders(headers: HeadersInit) {
+    this.defaultHeaders = headers;
+  }
+
+  async get<T>(url: string, options: RequestOptions = {}): Promise<T> {
+    const config: RequestInit = {
+      ...options,
+      headers: {
+        ...this.defaultHeaders,
+        ...options.headers
+      }
+    }
     const response = await fetch(url);
     return parseResponse<T>(response);
   }

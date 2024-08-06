@@ -38,5 +38,21 @@ describe('FetchWrapper', () => {
     expect(parseResponse).toHaveBeenCalled();
   });
 
+
+  it('should fetch JSON data with GET, Option Headers', async () => {
+    (parseResponse as jest.Mock).mockResolvedValue({ success: true });
+
+    const response = await fetchWrapper.post<{ success: boolean }>('https://api.example.com/submit', { name: 'Test' });
+    expect(response.success).toBe(true);
+    expect(fetch).toHaveBeenCalledWith('https://api.example.com/submit', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ name: 'Test' }),
+    });
+    expect(parseResponse).toHaveBeenCalled();
+  });
+
   // 나머지 테스트들
 });

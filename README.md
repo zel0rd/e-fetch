@@ -26,5 +26,48 @@ fetchWrapper.post<{ success: boolean }>('https://api.example.com/submit', { name
   .catch(error => console.error('Error:', error));
 ```
 
+## 기여
+
+예시 코드 작성
+```typescript
+import { fetchWrapper } from '../fetchWrapper';
+
+async function runExample() {
+  try {
+    fetchWrapper.setDefaultHeaders({
+      'Authorization': 'Bearer your-token',
+    });
+
+    const getResponse = await fetchWrapper.get<any>('https://jsonplaceholder.typicode.com/posts/1');
+    console.log('GET response:', getResponse);
+
+    const postResponse = await fetchWrapper.post<any>('https://jsonplaceholder.typicode.com/posts', {
+      title: 'foo',
+      body: 'bar',
+      userId: 1,
+    });
+    console.log('POST response:', postResponse);
+
+    const putResponse = await fetchWrapper.put<any>('https://jsonplaceholder.typicode.com/posts/1', {
+      id: 1,
+      title: 'foo',
+      body: 'bar',
+      userId: 1,
+    });
+    console.log('PUT response:', putResponse);
+
+    const deleteResponse = await fetchWrapper.delete<any>('https://jsonplaceholder.typicode.com/posts/1');
+    console.log('DELETE response:', deleteResponse);
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}
+
+runExample();
+
+```
+
+
 ## 라이센스
 이 프로젝트는 MIT 라이센스를 따릅니다. 자세한 내용은 LICENSE 파일을 참조하십시오.
+

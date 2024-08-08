@@ -1,17 +1,14 @@
 {
   "compilerOptions": {
-    "target": "ES5", // 컴파일된 코드의 JavaScript 버전
-    "module": "commonjs", // 모듈 시스템
-    "outDir": "./dist", // 컴파일된 파일이 생성될 디렉터리
-    "rootDir": "./src", // 소스 파일의 루트 디렉터리
-    "strict": true, // 엄격한 타입 검사 옵션
-    "esModuleInterop": true, // CommonJS 및 ES 모듈 호환
-    "skipLibCheck": true // 라이브러리의 타입 검사 건너뜀
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "target": "ES6",
+    "module": "commonjs",
+    "declaration": true, // TypeScript 타입 정의 파일 생성
+    "strict": true,
+    "esModuleInterop": true
   },
   "include": [
-    "src"
-  ], // 포함할 파일 또는 디렉터리
-  "exclude": [
-    "node_modules"
-  ] // 제외할 파일 또는 디렉터리
+    "src/fetchWrapper/**/*"
+  ]
 }

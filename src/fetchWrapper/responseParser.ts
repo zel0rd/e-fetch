@@ -1,9 +1,12 @@
+import { handleResponseError } from './responseErrorParser';
+
 export async function parseResponse<T>(response: Response): Promise<T> {
+  const contentType = response.headers.get('content-type');
+
   if (!response.ok) {
-    throw new Error(`HTTP error! status: ${response.status}`);
+    await handleResponseError(response);
   }
 
-  const contentType = response.headers.get('content-type');
   if (contentType?.includes('application/json')) {
     return response.json() as Promise<T>;
   } else if (contentType?.includes('text/html')) {

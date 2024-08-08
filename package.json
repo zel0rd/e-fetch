@@ -1,8 +1,9 @@
 {
   "name": "e-fetch",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "JavaScript의 'fetch' API를 편리하게 사용할 수 있도록 도와주는 TypeScript 기반의 라이브러리입니다.",
+  "main": "dist/fetchWrapper/index.js",
+  "types": "dist/fetchWrapper/index.d.ts",
   "scripts": {
     "test": "jest",
     "build": "tsc",

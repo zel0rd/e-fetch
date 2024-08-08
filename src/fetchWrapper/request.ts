@@ -8,44 +8,67 @@ export class FetchWrapper {
     this.defaultHeaders = headers;
   }
 
+  private async request<T>(url: string, config: RequestInit): Promise<T> {
+    try {
+      const response = await fetch(url, config);
+      return parseResponse<T>(response);
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(`Fetch error: ${error.message}`);
+      }
+      throw new Error(`Fetch error: ${String(error)}`);
+    }
+  }
+
   async get<T>(url: string, options: RequestOptions = {}): Promise<T> {
     const config: RequestInit = {
       ...options,
+      method: 'GET',
       headers: {
         ...this.defaultHeaders,
         ...options.headers
       }
-    }
-    const response = await fetch(url);
-    return parseResponse<T>(response);
+    };
+    return this.request<T>(url, config);
   }
 
-  async post<T>(url: string, body: any): Promise<T> {
-    const response = await fetch(url, {
+  async post<T>(url: string, body: any, options: RequestOptions = {}): Promise<T> {
+    const config: RequestInit = {
+      ...options,
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        ...this.defaultHeaders,
+        ...options.headers
       },
       body: JSON.stringify(body)
-    });
-    return parseResponse<T>(response);
+    };
+    return this.request<T>(url, config);
   }
 
-  async put<T>(url: string, body: any): Promise<T> {
-    const response = await fetch(url, {
+  async put<T>(url: string, body: any, options: RequestOptions = {}): Promise<T> {
+    const config: RequestInit = {
+      ...options,
       method: 'PUT',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        ...this.defaultHeaders,
+        ...options.headers
       },
       body: JSON.stringify(body)
-    });
-    return parseResponse<T>(response);
+    };
+    return this.request<T>(url, config);
   }
 
-  async delete<T>(url: string): Promise<T> {
-    const response = await fetch(url, {
-      method: 'DELETE'
-    });
-    return parseResponse<T>(response);
+  async delete<T>(url: string, options: RequestOptions = {}): Promise<T> {
+    const config: RequestInit = {
+      ...options,
+      method: 'DELETE',
+      headers: {
+        ...this.defaultHeaders,
+        ...options.headers
+      }
+    };
+    return this.request<T>(url, config);
   }
 }

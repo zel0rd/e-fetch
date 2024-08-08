@@ -9,13 +9,17 @@ export async function parseResponse<T>(response: Response): Promise<T> {
 
   if (contentType?.includes('application/json')) {
     return response.json() as Promise<T>;
-  } else if (contentType?.includes('text/html')) {
-    const text = await response.text();
-    return text as unknown as T;
-  } else if (contentType?.includes('text/plain')) {
-    const text = await response.text();
-    return text as unknown as T;
-  } else {
-    throw new Error(`Unsupported content type: ${contentType}`);
   }
+
+  if (contentType?.includes('text/html')) {
+    const text = await response.text();
+    return text as unknown as T;
+  }
+
+  if (contentType?.includes('text/plain')) {
+    const text = await response.text();
+    return text as unknown as T;
+  }
+
+  throw new Error(`Unsupported content type: ${contentType}`);
 }

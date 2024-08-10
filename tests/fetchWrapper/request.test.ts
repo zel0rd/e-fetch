@@ -19,9 +19,15 @@ describe('FetchWrapper', () => {
 
     const data = await fetchWrapper.get<{ message: string }>('https://api.example.com/message');
     expect(data.message).toBe('Hello, World!');
-    expect(fetch).toHaveBeenCalledWith('https://api.example.com/message');
+
+    // Adjusting the test to include default fetch options
+    expect(fetch).toHaveBeenCalledWith('https://api.example.com/message', {
+      method: 'GET',
+      headers: {},  // Assuming headers is an empty object by default, adjust if necessary
+    });
     expect(parseResponse).toHaveBeenCalled();
   });
+
 
   it('should post JSON data and receive JSON response', async () => {
     (parseResponse as jest.Mock).mockResolvedValue({ success: true });

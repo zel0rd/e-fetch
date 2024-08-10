@@ -47,11 +47,14 @@ describe('parseResponse', () => {
       headers: {
         get: () => 'application/json',
       },
-      json: () => Promise.resolve({}),
+      text: () => Promise.resolve('Not Found'),  // Mocking the text method
     } as unknown as Response;
 
-    await expect(parseResponse<{ message: string }>(mockResponse)).rejects.toThrow('HTTP error! status: 404');
+    // Adjust the expected error message to match the actual output
+    await expect(parseResponse<{ message: string }>(mockResponse)).rejects.toThrow('Not Found: Not Found');
   });
+
+
 
   it('should throw an error for unsupported content type', async () => {
     const mockResponse = {

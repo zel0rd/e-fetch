@@ -13,17 +13,36 @@ e-fetch는 JavaScript의 'fetch' API를 편리하게 사용할 수 있도록 도
 ## 사용방법
 
 ```javascript
-import { fetchWrapper } from 'my-fetch-wrapper';
+const { fetchWrapper } = require('@zelord/e-fetch')
 
-// GET 요청
-fetchWrapper.get<{ message: string }>('https://api.example.com/message')
-  .then(response => console.log(response.message))
-  .catch(error => console.error('Error:', error));
+async function runExample() {
+  try {
+    const getResponse = await fetchWrapper.get('https://jsonplaceholder.typicode.com/posts/1');
+    console.log('GET response:', getResponse);
 
-// POST 요청
-fetchWrapper.post<{ success: boolean }>('https://api.example.com/submit', { name: 'Test' })
-  .then(response => console.log('Success:', response.success))
-  .catch(error => console.error('Error:', error));
+    const postResponse = await fetchWrapper.post('https://jsonplaceholder.typicode.com/posts', {
+      title: 'foo',
+      body: 'bar',
+      userId: 1,
+    });
+    console.log('POST response:', postResponse);
+
+    const putResponse = await fetchWrapper.put('https://jsonplaceholder.typicode.com/posts/1', {
+      id: 1,
+      title: 'foo',
+      body: 'bar',
+      userId: 1,
+    });
+    console.log('PUT response:', putResponse);
+
+    const deleteResponse = await fetchWrapper.delete('https://jsonplaceholder.typicode.com/posts/1');
+    console.log('DELETE response:', deleteResponse);
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}
+
+runExample();
 ```
 
 ## 기여

@@ -85,10 +85,20 @@ fetchWrapper.delete(url)
 fetchWrapper.delete('https://jsonplaceholder.typicode.com/posts/1');
 ```
 
+## 에러 정보
+|status code|에러 내용|
+|------|---|
+|400|`Bad Request: ${errorText}`|
+|401|`Unauthorized: ${errorText}`|
+|403|`Forbidden: ${errorText}`|
+|404|`Not Found: ${errorText}`|
+|500|`Internal Server Error: ${errorText}`|
+|502|`Bad Gateway: ${errorText}`|
+|503|`Service Unavailable: ${errorText}`|
+|etc|`HTTP error! status: ${response.status}, message: ${errorText}`|
+
 
 ## 예시 코드
-
-
 
 ```javascript
 const { fetchWrapper } = require('@zelord/e-fetch')
